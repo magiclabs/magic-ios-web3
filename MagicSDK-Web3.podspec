@@ -31,4 +31,9 @@ HTTP RPC interface provided by this library or a custom RPC interface
       s.dependency 'CryptoSwift', '1.3.8'
       s.dependency 'secp256k1.swift', '~> 0.1'
 
+        s.pod_target_xcconfig = {
+            'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+          }
+        s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+
 end
