@@ -19,13 +19,8 @@ HTTP RPC interface provided by this library or a custom RPC interface
 
   s.swift_versions = '5.1.3', '5.1.2', '5.0', '5.1'
 
-  s.pod_target_xcconfig = {
-    'OTHER_SWIFT_FLAGS' => '-DWeb3CocoaPods'
-  }
+  s.default_subspecs = 'Core', 'HTTPExtension'
 
-#   s.default_subspecs = 'Core', 'HTTPExtension'
-
-  s.vendored_frameworks = "MagicSDK-Web3/MagicSDK_Web3.framework"
 
 s.subspec 'Core' do |ss|
     ss.source_files = 'MagicSDK-Web3/Classes/Core/**/*'
