@@ -1,0 +1,1745 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target x86_64-apple-ios9.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name MagicSDK_Web3
+@_exported import BigInt
+import CryptoSwift
+import Darwin
+import Dispatch
+import Foundation
+@_exported import MagicSDK_Web3
+@_exported import PromiseKit
+import Swift
+import secp256k1
+public struct ABI {
+  public static func encodeFunctionSignature(_ function: MagicSDK_Web3.SolidityFunction) -> Swift.String
+  public static func encodeEventSignature(_ event: MagicSDK_Web3.SolidityEvent) -> Swift.String
+  public static func encodeParameter(type: MagicSDK_Web3.SolidityType, value: MagicSDK_Web3.ABIEncodable) throws -> Swift.String
+  public static func encodeParameter(_ wrappedValue: MagicSDK_Web3.SolidityWrappedValue) throws -> Swift.String
+  public static func encodeParameters(types: [MagicSDK_Web3.SolidityType], values: [MagicSDK_Web3.ABIEncodable]) throws -> Swift.String
+  public static func encodeParameters(_ wrappedValues: [MagicSDK_Web3.SolidityWrappedValue]) throws -> Swift.String
+  public static func encodeFunctionCall(_ invocation: MagicSDK_Web3.SolidityInvocation) throws -> Swift.String
+  public static func decodeParameter(type: MagicSDK_Web3.SolidityType, from hexString: Swift.String) throws -> Any
+  public static func decodeParameters(types: [MagicSDK_Web3.SolidityType], from hexString: Swift.String) throws -> [Any]
+  public static func decodeParameters(_ outputs: [MagicSDK_Web3.SolidityParameter], from hexString: Swift.String) throws -> [Swift.String : Any]
+  public static func decodeLog(event: MagicSDK_Web3.SolidityEvent, from log: MagicSDK_Web3.EthereumLogObject) throws -> [Swift.String : Any]
+}
+public protocol SolidityTypeRepresentable {
+  static var solidityType: MagicSDK_Web3.SolidityType { get }
+}
+public protocol ABIConvertible : MagicSDK_Web3.ABIDecodable, MagicSDK_Web3.ABIEncodable {
+}
+public protocol ABIEncodable {
+  func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+public protocol ABIDecodable {
+  init?(hexString: Swift.String)
+}
+extension FixedWidthInteger where Self : Swift.UnsignedInteger {
+  public init?(hexString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension FixedWidthInteger where Self : Swift.SignedInteger {
+  public init?(hexString: Swift.String)
+  public init?(twosComplementString binaryString: Swift.String)
+  public var twosComplementRepresentation: Self {
+    get
+  }
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension BigInt : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public init?(twosComplementString binaryString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension BigInt : MagicSDK_Web3.SolidityTypeRepresentable {
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension BigUInt : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension BigUInt : MagicSDK_Web3.SolidityTypeRepresentable {
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension Bool : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension Bool : MagicSDK_Web3.SolidityTypeRepresentable {
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension String : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension String : MagicSDK_Web3.SolidityTypeRepresentable {
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension Array : MagicSDK_Web3.ABIEncodable where Element : MagicSDK_Web3.ABIEncodable {
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+  public func abiEncodeDynamic() -> Swift.String?
+}
+extension Array : MagicSDK_Web3.ABIDecodable where Element : MagicSDK_Web3.ABIDecodable {
+  public init?(hexString: Swift.String)
+  public init?(hexString: Swift.String, length: Swift.Int)
+}
+extension Array : MagicSDK_Web3.ABIConvertible where Element : MagicSDK_Web3.ABIConvertible {
+}
+extension Data : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public init?(hexString: Swift.String, length: Swift.UInt)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+  public func abiEncodeDynamic() -> Swift.String?
+}
+extension EthereumAddress : MagicSDK_Web3.ABIConvertible {
+  public init?(hexString: Swift.String)
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension EthereumAddress : MagicSDK_Web3.SolidityTypeRepresentable {
+  public static var solidityType: MagicSDK_Web3.SolidityType {
+    get
+  }
+}
+extension Int : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension Int8 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension Int16 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension Int32 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension Int64 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension UInt : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension UInt8 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension UInt16 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension UInt32 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+extension UInt64 : MagicSDK_Web3.ABIConvertible, MagicSDK_Web3.SolidityTypeRepresentable {
+}
+public struct ABIObject : Swift.Codable {
+  public enum StateMutability : Swift.String, Swift.Codable {
+    case pure
+    case view
+    case nonpayable
+    case payable
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public enum ObjectType : Swift.String, Swift.Codable {
+    case event
+    case function
+    case constructor
+    case fallback
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+  }
+  public struct Parameter : Swift.Codable {
+    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: Swift.Encoder) throws
+  }
+  public init(decoder: Swift.Decoder) throws
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension BigUInt : MagicSDK_Web3.Web3BytesConvertible {
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+  public init(_ bytes: MagicSDK_Web3.Bytes)
+}
+extension Array where Element == MagicSDK_Web3.Byte {
+  public var bigEndianUInt: Swift.UInt? {
+    get
+  }
+}
+public typealias Byte = Swift.UInt8
+public typealias Bytes = [MagicSDK_Web3.Byte]
+public protocol Web3BytesRepresentable {
+  func makeBytes() throws -> MagicSDK_Web3.Bytes
+}
+public protocol Web3BytesInitializable {
+  init(_ bytes: MagicSDK_Web3.Bytes) throws
+}
+public typealias Web3BytesConvertible = MagicSDK_Web3.Web3BytesInitializable & MagicSDK_Web3.Web3BytesRepresentable
+extension Web3BytesInitializable {
+  public init(_ bytes: MagicSDK_Web3.Web3BytesRepresentable) throws
+}
+extension SolidityInvocation {
+  public func call(block: MagicSDK_Web3.EthereumQuantityTag = .latest) -> PromiseKit.Promise<[Swift.String : Any]>
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func estimateGas(from: MagicSDK_Web3.EthereumAddress? = nil, gas: MagicSDK_Web3.EthereumQuantity? = nil, value: MagicSDK_Web3.EthereumQuantity? = nil) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+}
+extension SolidityConstructorInvocation {
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity = 0, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+}
+extension Data : MagicSDK_Web3.Web3BytesConvertible {
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+}
+public protocol ERC165Contract : MagicSDK_Web3.EthereumContract {
+  func supportsInterface(interface: Swift.String) -> MagicSDK_Web3.SolidityInvocation
+}
+extension ERC165Contract {
+  public func supportsInterface(interface: Swift.String) -> MagicSDK_Web3.SolidityInvocation
+}
+public protocol ERC20Contract : MagicSDK_Web3.EthereumContract {
+  static var Transfer: MagicSDK_Web3.SolidityEvent { get }
+  static var Approval: MagicSDK_Web3.SolidityEvent { get }
+  func totalSupply() -> MagicSDK_Web3.SolidityInvocation
+  func balanceOf(address: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  func approve(spender: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func allowance(owner: MagicSDK_Web3.EthereumAddress, spender: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  func transferFrom(from: MagicSDK_Web3.EthereumAddress, to: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func transfer(to: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+public protocol AnnotatedERC20 : MagicSDK_Web3.EthereumContract {
+  func name() -> MagicSDK_Web3.SolidityInvocation
+  func symbol() -> MagicSDK_Web3.SolidityInvocation
+  func decimals() -> MagicSDK_Web3.SolidityInvocation
+}
+open class GenericERC20Contract : MagicSDK_Web3.StaticContract, MagicSDK_Web3.ERC20Contract, MagicSDK_Web3.AnnotatedERC20 {
+  public var address: MagicSDK_Web3.EthereumAddress?
+  final public let eth: MagicSDK_Web3.Web3.Eth
+  open var constructor: MagicSDK_Web3.SolidityConstructor?
+  open var events: [MagicSDK_Web3.SolidityEvent] {
+    get
+  }
+  required public init(address: MagicSDK_Web3.EthereumAddress?, eth: MagicSDK_Web3.Web3.Eth)
+  @objc deinit
+}
+extension ERC20Contract {
+  public static var Transfer: MagicSDK_Web3.SolidityEvent {
+    get
+  }
+  public static var Approval: MagicSDK_Web3.SolidityEvent {
+    get
+  }
+  public func totalSupply() -> MagicSDK_Web3.SolidityInvocation
+  public func balanceOf(address: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  public func approve(spender: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func allowance(owner: MagicSDK_Web3.EthereumAddress, spender: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  public func transferFrom(from: MagicSDK_Web3.EthereumAddress, to: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func transfer(to: MagicSDK_Web3.EthereumAddress, value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+extension AnnotatedERC20 {
+  public func name() -> MagicSDK_Web3.SolidityInvocation
+  public func symbol() -> MagicSDK_Web3.SolidityInvocation
+  public func decimals() -> MagicSDK_Web3.SolidityInvocation
+}
+public protocol ERC721Contract : MagicSDK_Web3.ERC165Contract {
+  static var Transfer: MagicSDK_Web3.SolidityEvent { get }
+  static var Approval: MagicSDK_Web3.SolidityEvent { get }
+  func balanceOf(address: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  func ownerOf(tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func approve(to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func getApproved(tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func transferFrom(from: MagicSDK_Web3.EthereumAddress, to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func transfer(to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+public protocol AnnotatedERC721 : MagicSDK_Web3.EthereumContract {
+  func name() -> MagicSDK_Web3.SolidityInvocation
+  func symbol() -> MagicSDK_Web3.SolidityInvocation
+  func tokenURI() -> MagicSDK_Web3.SolidityInvocation
+}
+public protocol EnumeratedERC721 : MagicSDK_Web3.EthereumContract {
+  func totalSupply() -> MagicSDK_Web3.SolidityInvocation
+  func tokenByIndex(index: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  func tokenOfOwnerByIndex(owner: MagicSDK_Web3.EthereumAddress, index: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+open class GenericERC721Contract : MagicSDK_Web3.StaticContract, MagicSDK_Web3.ERC721Contract {
+  public var address: MagicSDK_Web3.EthereumAddress?
+  final public let eth: MagicSDK_Web3.Web3.Eth
+  open var constructor: MagicSDK_Web3.SolidityConstructor?
+  open var events: [MagicSDK_Web3.SolidityEvent] {
+    get
+  }
+  required public init(address: MagicSDK_Web3.EthereumAddress?, eth: MagicSDK_Web3.Web3.Eth)
+  @objc deinit
+}
+extension ERC721Contract {
+  public static var Transfer: MagicSDK_Web3.SolidityEvent {
+    get
+  }
+  public static var Approval: MagicSDK_Web3.SolidityEvent {
+    get
+  }
+  public func balanceOf(address: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityInvocation
+  public func ownerOf(tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func approve(to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func getApproved(tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func transferFrom(from: MagicSDK_Web3.EthereumAddress, to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func transfer(to: MagicSDK_Web3.EthereumAddress, tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+extension AnnotatedERC721 {
+  public func name() -> MagicSDK_Web3.SolidityInvocation
+  public func symbol() -> MagicSDK_Web3.SolidityInvocation
+  public func tokenURI(tokenId: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+extension EnumeratedERC721 {
+  public func totalSupply() -> MagicSDK_Web3.SolidityInvocation
+  public func tokenByIndex(index: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+  public func tokenOfOwnerByIndex(owner: MagicSDK_Web3.EthereumAddress, index: BigInt.BigUInt) -> MagicSDK_Web3.SolidityInvocation
+}
+extension Web3.Eth {
+  public var abi: MagicSDK_Web3.ABI.Type {
+    get
+  }
+}
+public enum ContractParsingError : Swift.Error, Foundation.LocalizedError {
+  case invalidKey
+  public var localizedDescription: Swift.String {
+    get
+  }
+  public static func == (a: MagicSDK_Web3.ContractParsingError, b: MagicSDK_Web3.ContractParsingError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension Web3.Eth {
+  public func Contract(json data: Foundation.Data, abiKey: Swift.String?, address: MagicSDK_Web3.EthereumAddress?) throws -> MagicSDK_Web3.DynamicContract
+  public func Contract(abi: [MagicSDK_Web3.ABIObject], address: MagicSDK_Web3.EthereumAddress? = nil) -> MagicSDK_Web3.DynamicContract
+  public func Contract<T>(type: T.Type, address: MagicSDK_Web3.EthereumAddress? = nil) -> T where T : MagicSDK_Web3.StaticContract
+}
+public struct EthereumAddress {
+  public let rawAddress: MagicSDK_Web3.Bytes
+  public init(hex: Swift.String, eip55: Swift.Bool) throws
+  public init(rawAddress: MagicSDK_Web3.Bytes) throws
+  public func hex(eip55: Swift.Bool) -> Swift.String
+  public enum Error : Swift.Error {
+    case addressMalformed
+    case checksumWrong
+    public static func == (a: MagicSDK_Web3.EthereumAddress.Error, b: MagicSDK_Web3.EthereumAddress.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+}
+extension EthereumAddress : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumAddress : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumAddress, rhs: MagicSDK_Web3.EthereumAddress) -> Swift.Bool
+}
+extension EthereumAddress : MagicSDK_Web3.Web3BytesConvertible {
+  public init(_ bytes: MagicSDK_Web3.Bytes) throws
+  public func makeBytes() throws -> MagicSDK_Web3.Bytes
+}
+extension EthereumAddress : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumBlockObject : Swift.Codable {
+  public let number: MagicSDK_Web3.EthereumQuantity?
+  public let hash: MagicSDK_Web3.EthereumData?
+  public let parentHash: MagicSDK_Web3.EthereumData
+  public let nonce: MagicSDK_Web3.EthereumData?
+  public let sha3Uncles: MagicSDK_Web3.EthereumData
+  public let logsBloom: MagicSDK_Web3.EthereumData?
+  public let transactionsRoot: MagicSDK_Web3.EthereumData
+  public let stateRoot: MagicSDK_Web3.EthereumData
+  public let receiptsRoot: MagicSDK_Web3.EthereumData
+  public let miner: MagicSDK_Web3.EthereumAddress
+  public let difficulty: MagicSDK_Web3.EthereumQuantity
+  public let totalDifficulty: MagicSDK_Web3.EthereumQuantity
+  public let extraData: MagicSDK_Web3.EthereumData
+  public let size: MagicSDK_Web3.EthereumQuantity
+  public let gasLimit: MagicSDK_Web3.EthereumQuantity
+  public let gasUsed: MagicSDK_Web3.EthereumQuantity
+  public let timestamp: MagicSDK_Web3.EthereumQuantity
+  public let transactions: [MagicSDK_Web3.EthereumBlockObject.Transaction]
+  public let uncles: [MagicSDK_Web3.EthereumData]
+  public struct Transaction : Swift.Codable {
+    public let object: MagicSDK_Web3.EthereumTransactionObject?
+    public let hash: MagicSDK_Web3.EthereumData?
+    public init(object: MagicSDK_Web3.EthereumTransactionObject)
+    public init(hash: MagicSDK_Web3.EthereumData)
+    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: Swift.Encoder) throws
+    public enum Error : Swift.Error {
+      case unsupportedType
+      public static func == (a: MagicSDK_Web3.EthereumBlockObject.Transaction.Error, b: MagicSDK_Web3.EthereumBlockObject.Transaction.Error) -> Swift.Bool
+      public var hashValue: Swift.Int {
+        get
+      }
+      public func hash(into hasher: inout Swift.Hasher)
+    }
+  }
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumBlockObject.Transaction : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumBlockObject.Transaction, rhs: MagicSDK_Web3.EthereumBlockObject.Transaction) -> Swift.Bool
+}
+extension EthereumBlockObject : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumBlockObject, rhs: MagicSDK_Web3.EthereumBlockObject) -> Swift.Bool
+}
+extension EthereumBlockObject.Transaction : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension EthereumBlockObject : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumCall : Swift.Codable {
+  public let from: MagicSDK_Web3.EthereumAddress?
+  public let to: MagicSDK_Web3.EthereumAddress
+  public let gas: MagicSDK_Web3.EthereumQuantity?
+  public let gasPrice: MagicSDK_Web3.EthereumQuantity?
+  public let value: MagicSDK_Web3.EthereumQuantity?
+  public let data: MagicSDK_Web3.EthereumData?
+  public init(from: MagicSDK_Web3.EthereumAddress? = nil, to: MagicSDK_Web3.EthereumAddress, gas: MagicSDK_Web3.EthereumQuantity? = nil, gasPrice: MagicSDK_Web3.EthereumQuantity? = nil, value: MagicSDK_Web3.EthereumQuantity? = nil, data: MagicSDK_Web3.EthereumData? = nil)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct EthereumCallParams : Swift.Codable {
+  public let call: MagicSDK_Web3.EthereumCall
+  public var from: MagicSDK_Web3.EthereumAddress? {
+    get
+  }
+  public var to: MagicSDK_Web3.EthereumAddress {
+    get
+  }
+  public var gas: MagicSDK_Web3.EthereumQuantity? {
+    get
+  }
+  public var gasPrice: MagicSDK_Web3.EthereumQuantity? {
+    get
+  }
+  public var value: MagicSDK_Web3.EthereumQuantity? {
+    get
+  }
+  public var data: MagicSDK_Web3.EthereumData? {
+    get
+  }
+  public let block: MagicSDK_Web3.EthereumQuantityTag
+  public init(call: MagicSDK_Web3.EthereumCall, block: MagicSDK_Web3.EthereumQuantityTag)
+  public init(from: MagicSDK_Web3.EthereumAddress? = nil, to: MagicSDK_Web3.EthereumAddress, gas: MagicSDK_Web3.EthereumQuantity? = nil, gasPrice: MagicSDK_Web3.EthereumQuantity? = nil, value: MagicSDK_Web3.EthereumQuantity? = nil, data: MagicSDK_Web3.EthereumData? = nil, block: MagicSDK_Web3.EthereumQuantityTag)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumCall : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumCall, rhs: MagicSDK_Web3.EthereumCall) -> Swift.Bool
+}
+extension EthereumCallParams : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumCallParams, rhs: MagicSDK_Web3.EthereumCallParams) -> Swift.Bool
+}
+extension EthereumCall : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension EthereumCallParams : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol EthereumContract : MagicSDK_Web3.SolidityFunctionHandler {
+  var address: MagicSDK_Web3.EthereumAddress? { get }
+  var eth: MagicSDK_Web3.Web3.Eth { get }
+  var events: [MagicSDK_Web3.SolidityEvent] { get }
+}
+public protocol StaticContract : MagicSDK_Web3.EthereumContract {
+  init(address: MagicSDK_Web3.EthereumAddress?, eth: MagicSDK_Web3.Web3.Eth)
+}
+public class DynamicContract : MagicSDK_Web3.EthereumContract {
+  public var address: MagicSDK_Web3.EthereumAddress?
+  final public let eth: MagicSDK_Web3.Web3.Eth
+  public var constructor: MagicSDK_Web3.SolidityConstructor? {
+    get
+  }
+  public var events: [MagicSDK_Web3.SolidityEvent] {
+    get
+  }
+  public init(abi: [MagicSDK_Web3.ABIObject], address: MagicSDK_Web3.EthereumAddress?, eth: MagicSDK_Web3.Web3.Eth)
+  public func add(event: MagicSDK_Web3.SolidityEvent)
+  public func add(method: MagicSDK_Web3.SolidityFunction)
+  public subscript(name: Swift.String) -> ((MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityInvocation)? {
+    get
+  }
+  public func deploy(byteCode: MagicSDK_Web3.EthereumData, parameters: MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityConstructorInvocation?
+  public func deploy(byteCode: MagicSDK_Web3.EthereumData, parameters: [MagicSDK_Web3.ABIEncodable]) -> MagicSDK_Web3.SolidityConstructorInvocation?
+  public func deploy(byteCode: MagicSDK_Web3.EthereumData) -> MagicSDK_Web3.SolidityConstructorInvocation?
+  @objc deinit
+}
+extension EthereumContract {
+  public func call(_ call: MagicSDK_Web3.EthereumCall, outputs: [MagicSDK_Web3.SolidityFunctionParameter], block: MagicSDK_Web3.EthereumQuantityTag = .latest, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  public func send(_ transaction: MagicSDK_Web3.EthereumTransaction, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+  public func estimateGas(_ call: MagicSDK_Web3.EthereumCall, completion: @escaping (MagicSDK_Web3.EthereumQuantity?, Swift.Error?) -> Swift.Void)
+}
+public struct EthereumData : MagicSDK_Web3.Web3BytesConvertible {
+  public let bytes: MagicSDK_Web3.Bytes
+  public init(_ bytes: MagicSDK_Web3.Bytes)
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+  public func hex() -> Swift.String
+}
+extension EthereumData : MagicSDK_Web3.EthereumValueConvertible {
+  public static func string(_ string: Swift.String) throws -> MagicSDK_Web3.EthereumData
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumValue {
+  public var ethereumData: MagicSDK_Web3.EthereumData? {
+    get
+  }
+}
+extension EthereumData : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumData, rhs: MagicSDK_Web3.EthereumData) -> Swift.Bool
+}
+extension EthereumData : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumLogObject : Swift.Codable {
+  public let removed: Swift.Bool?
+  public let logIndex: MagicSDK_Web3.EthereumQuantity?
+  public let transactionIndex: MagicSDK_Web3.EthereumQuantity?
+  public let transactionHash: MagicSDK_Web3.EthereumData?
+  public let blockHash: MagicSDK_Web3.EthereumData?
+  public let blockNumber: MagicSDK_Web3.EthereumQuantity?
+  public let address: MagicSDK_Web3.EthereumAddress
+  public let data: MagicSDK_Web3.EthereumData
+  public let topics: [MagicSDK_Web3.EthereumData]
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumLogObject : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumLogObject, rhs: MagicSDK_Web3.EthereumLogObject) -> Swift.Bool
+}
+extension EthereumLogObject : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class EthereumPrivateKey {
+  final public let rawPrivateKey: MagicSDK_Web3.Bytes
+  final public let publicKey: MagicSDK_Web3.EthereumPublicKey
+  final public var address: MagicSDK_Web3.EthereumAddress {
+    get
+  }
+  convenience public init() throws
+  required convenience public init(_ bytes: MagicSDK_Web3.Bytes) throws
+  public init(privateKey: MagicSDK_Web3.Bytes, ctx: Swift.OpaquePointer? = nil) throws
+  convenience public init(hexPrivateKey: Swift.String, ctx: Swift.OpaquePointer? = nil) throws
+  final public func sign(message: MagicSDK_Web3.Bytes) throws -> (v: Swift.UInt, r: MagicSDK_Web3.Bytes, s: MagicSDK_Web3.Bytes)
+  final public func sign(hash _hash: Swift.Array<Swift.UInt8>) throws -> (v: Swift.UInt, r: MagicSDK_Web3.Bytes, s: MagicSDK_Web3.Bytes)
+  final public func hex() -> Swift.String
+  public enum Error : Swift.Error {
+    case internalError
+    case keyMalformed
+    case pubKeyGenerationFailed
+    public static func == (a: MagicSDK_Web3.EthereumPrivateKey.Error, b: MagicSDK_Web3.EthereumPrivateKey.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  @objc deinit
+}
+extension EthereumPrivateKey : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumPrivateKey, rhs: MagicSDK_Web3.EthereumPrivateKey) -> Swift.Bool
+}
+extension EthereumPrivateKey : MagicSDK_Web3.Web3BytesConvertible {
+  final public func makeBytes() -> MagicSDK_Web3.Bytes
+}
+extension EthereumPrivateKey : Swift.Hashable {
+  final public func hash(into hasher: inout Swift.Hasher)
+  final public var hashValue: Swift.Int {
+    get
+  }
+}
+final public class EthereumPublicKey {
+  final public let rawPublicKey: MagicSDK_Web3.Bytes
+  final public let address: MagicSDK_Web3.EthereumAddress
+  required convenience public init(_ bytes: MagicSDK_Web3.Bytes) throws
+  public init(publicKey: MagicSDK_Web3.Bytes, ctx: Swift.OpaquePointer? = nil) throws
+  public init(message: MagicSDK_Web3.Bytes, v: MagicSDK_Web3.EthereumQuantity, r: MagicSDK_Web3.EthereumQuantity, s: MagicSDK_Web3.EthereumQuantity, ctx: Swift.OpaquePointer? = nil) throws
+  convenience public init(hexPublicKey: Swift.String) throws
+  final public func hex() -> Swift.String
+  public enum Error : Swift.Error {
+    case internalError
+    case keyMalformed
+    case signatureMalformed
+    public static func == (a: MagicSDK_Web3.EthereumPublicKey.Error, b: MagicSDK_Web3.EthereumPublicKey.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  @objc deinit
+}
+extension EthereumPublicKey : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumPublicKey, rhs: MagicSDK_Web3.EthereumPublicKey) -> Swift.Bool
+}
+extension EthereumPublicKey : MagicSDK_Web3.Web3BytesConvertible {
+  final public func makeBytes() -> MagicSDK_Web3.Bytes
+}
+extension EthereumPublicKey : Swift.Hashable {
+  final public func hash(into hasher: inout Swift.Hasher)
+  final public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumQuantity {
+  public let quantity: BigInt.BigUInt
+  public static func bytes(_ bytes: MagicSDK_Web3.Bytes) -> MagicSDK_Web3.EthereumQuantity
+  public init(quantity: BigInt.BigUInt)
+  public func hex() -> Swift.String
+}
+extension EthereumQuantity : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.UInt64
+  public init(integerLiteral value: Swift.UInt64)
+}
+extension EthereumQuantity : MagicSDK_Web3.EthereumValueConvertible {
+  public static func string(_ string: Swift.String) throws -> MagicSDK_Web3.EthereumQuantity
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumValue {
+  public var ethereumQuantity: MagicSDK_Web3.EthereumQuantity? {
+    get
+  }
+}
+extension EthereumQuantity : MagicSDK_Web3.Web3BytesConvertible {
+  public init(_ bytes: MagicSDK_Web3.Bytes)
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+}
+extension EthereumQuantity : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumQuantity, rhs: MagicSDK_Web3.EthereumQuantity) -> Swift.Bool
+}
+extension EthereumQuantity : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumQuantityTag {
+  public enum TagType {
+    case block(BigInt.BigUInt)
+    case latest
+    case earliest
+    case pending
+  }
+  public let tagType: MagicSDK_Web3.EthereumQuantityTag.TagType
+  public init(tagType: MagicSDK_Web3.EthereumQuantityTag.TagType)
+}
+extension EthereumQuantityTag {
+  public static var latest: MagicSDK_Web3.EthereumQuantityTag {
+    get
+  }
+  public static var earliest: MagicSDK_Web3.EthereumQuantityTag {
+    get
+  }
+  public static var pending: MagicSDK_Web3.EthereumQuantityTag {
+    get
+  }
+  public static func block(_ bigUInt: BigInt.BigUInt) -> MagicSDK_Web3.EthereumQuantityTag
+}
+extension EthereumQuantityTag : MagicSDK_Web3.EthereumValueConvertible {
+  public static func string(_ string: Swift.String) throws -> MagicSDK_Web3.EthereumQuantityTag
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumQuantityTag.TagType : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumQuantityTag.TagType, rhs: MagicSDK_Web3.EthereumQuantityTag.TagType) -> Swift.Bool
+}
+extension EthereumQuantityTag : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumQuantityTag, rhs: MagicSDK_Web3.EthereumQuantityTag) -> Swift.Bool
+}
+extension EthereumQuantityTag.TagType : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension EthereumQuantityTag : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumSyncStatusObject : Swift.Codable {
+  public let syncing: Swift.Bool
+  public let startingBlock: MagicSDK_Web3.EthereumQuantity?
+  public let currentBlock: MagicSDK_Web3.EthereumQuantity?
+  public let highestBlock: MagicSDK_Web3.EthereumQuantity?
+  public init()
+  public init(startingBlock: MagicSDK_Web3.EthereumQuantity, currentBlock: MagicSDK_Web3.EthereumQuantity, highestBlock: MagicSDK_Web3.EthereumQuantity)
+  public enum CodingKeys : Swift.String, Swift.CodingKey {
+    case startingBlock
+    case currentBlock
+    case highestBlock
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public var stringValue: Swift.String {
+      get
+    }
+    public init?(stringValue: Swift.String)
+    public var intValue: Swift.Int? {
+      get
+    }
+    public init?(intValue: Swift.Int)
+  }
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumSyncStatusObject : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumSyncStatusObject, rhs: MagicSDK_Web3.EthereumSyncStatusObject) -> Swift.Bool
+}
+extension EthereumSyncStatusObject : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumTransaction : Swift.Codable {
+  public var nonce: MagicSDK_Web3.EthereumQuantity?
+  public var gasPrice: MagicSDK_Web3.EthereumQuantity?
+  public var gas: MagicSDK_Web3.EthereumQuantity?
+  public var from: MagicSDK_Web3.EthereumAddress?
+  public var to: MagicSDK_Web3.EthereumAddress?
+  public var value: MagicSDK_Web3.EthereumQuantity?
+  public var data: MagicSDK_Web3.EthereumData
+  public init(nonce: MagicSDK_Web3.EthereumQuantity? = nil, gasPrice: MagicSDK_Web3.EthereumQuantity? = nil, gas: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress? = nil, to: MagicSDK_Web3.EthereumAddress? = nil, value: MagicSDK_Web3.EthereumQuantity? = nil, data: MagicSDK_Web3.EthereumData = EthereumData([]))
+  public func sign(with privateKey: MagicSDK_Web3.EthereumPrivateKey, chainId: MagicSDK_Web3.EthereumQuantity = 0) throws -> MagicSDK_Web3.EthereumSignedTransaction
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct EthereumSignedTransaction {
+  public let nonce: MagicSDK_Web3.EthereumQuantity
+  public let gasPrice: MagicSDK_Web3.EthereumQuantity
+  public let gasLimit: MagicSDK_Web3.EthereumQuantity
+  public let to: MagicSDK_Web3.EthereumAddress?
+  public let value: MagicSDK_Web3.EthereumQuantity
+  public let data: MagicSDK_Web3.EthereumData
+  public let v: MagicSDK_Web3.EthereumQuantity
+  public let r: MagicSDK_Web3.EthereumQuantity
+  public let s: MagicSDK_Web3.EthereumQuantity
+  public let chainId: MagicSDK_Web3.EthereumQuantity
+  public init(nonce: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity, gasLimit: MagicSDK_Web3.EthereumQuantity, to: MagicSDK_Web3.EthereumAddress?, value: MagicSDK_Web3.EthereumQuantity, data: MagicSDK_Web3.EthereumData, v: MagicSDK_Web3.EthereumQuantity, r: MagicSDK_Web3.EthereumQuantity, s: MagicSDK_Web3.EthereumQuantity, chainId: MagicSDK_Web3.EthereumQuantity)
+  public func verifySignature() -> Swift.Bool
+  public enum Error : Swift.Error {
+    case transactionInvalid
+    case rlpItemInvalid
+    case signatureMalformed
+    public static func == (a: MagicSDK_Web3.EthereumSignedTransaction.Error, b: MagicSDK_Web3.EthereumSignedTransaction.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+}
+extension EthereumSignedTransaction : MagicSDK_Web3.RLPItemConvertible {
+  public init(rlp: MagicSDK_Web3.RLPItem) throws
+  public func rlp() -> MagicSDK_Web3.RLPItem
+}
+extension EthereumTransaction : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumTransaction, rhs: MagicSDK_Web3.EthereumTransaction) -> Swift.Bool
+}
+extension EthereumSignedTransaction : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumSignedTransaction, rhs: MagicSDK_Web3.EthereumSignedTransaction) -> Swift.Bool
+}
+extension EthereumTransaction : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension EthereumSignedTransaction : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumTransactionObject : Swift.Codable {
+  public let hash: MagicSDK_Web3.EthereumData
+  public let nonce: MagicSDK_Web3.EthereumQuantity
+  public let blockHash: MagicSDK_Web3.EthereumData?
+  public let blockNumber: MagicSDK_Web3.EthereumQuantity?
+  public let transactionIndex: MagicSDK_Web3.EthereumQuantity?
+  public let from: MagicSDK_Web3.EthereumAddress
+  public let to: MagicSDK_Web3.EthereumAddress?
+  public let value: MagicSDK_Web3.EthereumQuantity
+  public let gasPrice: MagicSDK_Web3.EthereumQuantity
+  public let gas: MagicSDK_Web3.EthereumQuantity
+  public let input: MagicSDK_Web3.EthereumData
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumTransactionObject : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumTransactionObject, rhs: MagicSDK_Web3.EthereumTransactionObject) -> Swift.Bool
+}
+extension EthereumTransactionObject : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumTransactionReceiptObject : Swift.Codable {
+  public let transactionHash: MagicSDK_Web3.EthereumData
+  public let transactionIndex: MagicSDK_Web3.EthereumQuantity
+  public let blockHash: MagicSDK_Web3.EthereumData
+  public let blockNumber: MagicSDK_Web3.EthereumQuantity
+  public let cumulativeGasUsed: MagicSDK_Web3.EthereumQuantity
+  public let gasUsed: MagicSDK_Web3.EthereumQuantity
+  public let contractAddress: MagicSDK_Web3.EthereumData?
+  public let logs: [MagicSDK_Web3.EthereumLogObject]
+  public let logsBloom: MagicSDK_Web3.EthereumData
+  public let root: MagicSDK_Web3.EthereumData?
+  public let status: MagicSDK_Web3.EthereumQuantity?
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumTransactionReceiptObject : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumTransactionReceiptObject, rhs: MagicSDK_Web3.EthereumTransactionReceiptObject) -> Swift.Bool
+}
+extension EthereumTransactionReceiptObject : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct EthereumValue : Swift.Codable {
+  public let valueType: MagicSDK_Web3.EthereumValue.ValueType
+  public enum ValueType {
+    case string(Swift.String)
+    case int(Swift.Int)
+    case bool(Swift.Bool)
+    case array([MagicSDK_Web3.EthereumValue])
+    case `nil`
+  }
+  public init(valueType: MagicSDK_Web3.EthereumValue.ValueType)
+  public init(from decoder: Swift.Decoder) throws
+  public enum Error : Swift.Error {
+    case unsupportedType
+    public static func == (a: MagicSDK_Web3.EthereumValue.Error, b: MagicSDK_Web3.EthereumValue.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumValue : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public init(stringLiteral value: MagicSDK_Web3.EthereumValue.StringLiteralType)
+  public typealias ExtendedGraphemeClusterLiteralType = MagicSDK_Web3.EthereumValue.StringLiteralType
+  public typealias UnicodeScalarLiteralType = MagicSDK_Web3.EthereumValue.StringLiteralType
+}
+extension EthereumValue : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+  public init(integerLiteral value: MagicSDK_Web3.EthereumValue.IntegerLiteralType)
+}
+extension EthereumValue : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+  public init(booleanLiteral value: MagicSDK_Web3.EthereumValue.BooleanLiteralType)
+}
+extension EthereumValue : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = MagicSDK_Web3.EthereumValueRepresentable
+  public init(array: [MagicSDK_Web3.EthereumValueRepresentable])
+  public init(arrayLiteral elements: MagicSDK_Web3.EthereumValue.ArrayLiteralElement...)
+}
+extension EthereumValue {
+  public static func string(_ string: Swift.String) -> MagicSDK_Web3.EthereumValue
+  public static func int(_ int: Swift.Int) -> MagicSDK_Web3.EthereumValue
+  public static func bool(_ bool: Swift.Bool) -> MagicSDK_Web3.EthereumValue
+  public static func array(_ array: [MagicSDK_Web3.EthereumValueRepresentable]) -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumValue {
+  public var string: Swift.String? {
+    get
+  }
+  public var int: Swift.Int? {
+    get
+  }
+  public var bool: Swift.Bool? {
+    get
+  }
+  public var array: [MagicSDK_Web3.EthereumValue]? {
+    get
+  }
+}
+extension EthereumValue : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue)
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension EthereumValue.ValueType : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumValue.ValueType, rhs: MagicSDK_Web3.EthereumValue.ValueType) -> Swift.Bool
+}
+extension EthereumValue : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.EthereumValue, rhs: MagicSDK_Web3.EthereumValue) -> Swift.Bool
+}
+extension EthereumValue.ValueType : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension EthereumValue : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol EthereumValueRepresentable : Swift.Encodable {
+  func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+public protocol EthereumValueInitializable : Swift.Decodable {
+  init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+}
+public typealias EthereumValueConvertible = MagicSDK_Web3.EthereumValueInitializable & MagicSDK_Web3.EthereumValueRepresentable
+extension EthereumValueInitializable {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValueRepresentable) throws
+}
+extension EthereumValueRepresentable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension EthereumValueInitializable {
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum EthereumValueRepresentableError : Swift.Error {
+  case notRepresentable
+  public static func == (a: MagicSDK_Web3.EthereumValueRepresentableError, b: MagicSDK_Web3.EthereumValueRepresentableError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public enum EthereumValueInitializableError : Swift.Error {
+  case notInitializable
+  public static func == (a: MagicSDK_Web3.EthereumValueInitializableError, b: MagicSDK_Web3.EthereumValueInitializableError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension BigUInt {
+  public var eth: BigInt.BigUInt {
+    get
+  }
+  public var gwei: BigInt.BigUInt {
+    get
+  }
+}
+extension UnsignedInteger {
+  public var eth: BigInt.BigUInt {
+    get
+  }
+  public var gwei: BigInt.BigUInt {
+    get
+  }
+}
+extension SignedInteger {
+  public var eth: BigInt.BigUInt {
+    get
+  }
+  public var gwei: BigInt.BigUInt {
+    get
+  }
+}
+public protocol Promisable {
+  var promise: PromiseKit.Promise<Self> { get }
+}
+public protocol Guaranteeable : MagicSDK_Web3.Promisable {
+  var guarantee: PromiseKit.Guarantee<Self> { get }
+}
+extension Guaranteeable {
+  public var guarantee: PromiseKit.Guarantee<Self> {
+    get
+  }
+  public var promise: PromiseKit.Promise<Self> {
+    get
+  }
+}
+extension EthereumBlockObject : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumBlockObject.Transaction : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumCall : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumCallParams : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumData : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumLogObject : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumQuantity : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumQuantityTag : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumSyncStatusObject : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumTransactionObject : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumTransactionReceiptObject : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumValue : MagicSDK_Web3.Guaranteeable {
+}
+extension RPCRequest : MagicSDK_Web3.Guaranteeable {
+}
+extension RPCResponse : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumAddress : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumPrivateKey : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumPublicKey : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumTransaction : MagicSDK_Web3.Guaranteeable {
+}
+extension EthereumSignedTransaction : MagicSDK_Web3.Guaranteeable {
+}
+open class RLPDecoder {
+  public init()
+  open func decode(_ rlp: MagicSDK_Web3.Bytes) throws -> MagicSDK_Web3.RLPItem
+  public enum Error : Swift.Error {
+    case inputEmpty
+    case inputMalformed
+    case inputTooLong
+    case lengthPrefixMalformed
+    public static func == (a: MagicSDK_Web3.RLPDecoder.Error, b: MagicSDK_Web3.RLPDecoder.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  @objc deinit
+}
+open class RLPEncoder {
+  public init()
+  open func encode(_ value: MagicSDK_Web3.RLPItem) throws -> MagicSDK_Web3.Bytes
+  public enum Error : Swift.Error {
+    case inputTooLong
+    public static func == (a: MagicSDK_Web3.RLPEncoder.Error, b: MagicSDK_Web3.RLPEncoder.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  @objc deinit
+}
+public struct RLPItem {
+  public let valueType: MagicSDK_Web3.RLPItem.ValueType
+  public enum ValueType {
+    case bytes(MagicSDK_Web3.Bytes)
+    case array([MagicSDK_Web3.RLPItem])
+  }
+  public init(valueType: MagicSDK_Web3.RLPItem.ValueType)
+}
+extension RLPItem {
+  public static func bytes(_ bytes: MagicSDK_Web3.Bytes) -> MagicSDK_Web3.RLPItem
+  public static func bytes(_ bytes: MagicSDK_Web3.Byte...) -> MagicSDK_Web3.RLPItem
+  public init(bytes: MagicSDK_Web3.Bytes)
+}
+extension RLPItem : Swift.ExpressibleByStringLiteral {
+  public static func string(_ string: Swift.String) -> MagicSDK_Web3.RLPItem
+  public typealias StringLiteralType = Swift.String
+  public init(stringLiteral value: Swift.String)
+  public typealias ExtendedGraphemeClusterLiteralType = MagicSDK_Web3.RLPItem.StringLiteralType
+  public typealias UnicodeScalarLiteralType = MagicSDK_Web3.RLPItem.StringLiteralType
+}
+extension RLPItem : Swift.ExpressibleByIntegerLiteral {
+  public static func bigUInt(_ uint: BigInt.BigUInt) -> MagicSDK_Web3.RLPItem
+  public static func uint(_ uint: Swift.UInt) -> MagicSDK_Web3.RLPItem
+  public typealias IntegerLiteralType = Swift.UInt
+  public init(integerLiteral value: Swift.UInt)
+}
+extension RLPItem : Swift.ExpressibleByArrayLiteral {
+  public static func array(_ array: [MagicSDK_Web3.RLPItem]) -> MagicSDK_Web3.RLPItem
+  public static func array(_ array: MagicSDK_Web3.RLPItem...) -> MagicSDK_Web3.RLPItem
+  public typealias ArrayLiteralElement = MagicSDK_Web3.RLPItem
+  public init(arrayLiteral elements: MagicSDK_Web3.RLPItem...)
+}
+extension RLPItem {
+  public var bytes: MagicSDK_Web3.Bytes? {
+    get
+  }
+  public var string: Swift.String? {
+    get
+  }
+  public var uint: Swift.UInt? {
+    get
+  }
+  public var bigUInt: BigInt.BigUInt? {
+    get
+  }
+  public var array: [MagicSDK_Web3.RLPItem]? {
+    get
+  }
+}
+extension RLPItem : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension RLPItem : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension RLPItem.ValueType : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.RLPItem.ValueType, rhs: MagicSDK_Web3.RLPItem.ValueType) -> Swift.Bool
+}
+extension RLPItem : Swift.Equatable {
+  public static func == (lhs: MagicSDK_Web3.RLPItem, rhs: MagicSDK_Web3.RLPItem) -> Swift.Bool
+}
+extension RLPItem.ValueType : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension RLPItem : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol RLPItemRepresentable {
+  func rlp() throws -> MagicSDK_Web3.RLPItem
+}
+public protocol RLPItemInitializable {
+  init(rlp: MagicSDK_Web3.RLPItem) throws
+}
+public typealias RLPItemConvertible = MagicSDK_Web3.RLPItemInitializable & MagicSDK_Web3.RLPItemRepresentable
+extension RLPItemInitializable {
+  public init(rlp: MagicSDK_Web3.RLPItemRepresentable) throws
+}
+public enum RLPItemRepresentableError : Swift.Error {
+  case notRepresentable
+  public static func == (a: MagicSDK_Web3.RLPItemRepresentableError, b: MagicSDK_Web3.RLPItemRepresentableError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public enum RLPItemInitializableError : Swift.Error {
+  case notInitializable
+  public static func == (a: MagicSDK_Web3.RLPItemInitializableError, b: MagicSDK_Web3.RLPItemInitializableError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public struct RPCRequest<Params> : Swift.Codable where Params : Swift.Decodable, Params : Swift.Encodable {
+  public let id: Swift.Int
+  public let jsonrpc: Swift.String
+  public let method: Swift.String
+  public let params: Params
+  public init(id: Swift.Int, jsonrpc: Swift.String, method: Swift.String, params: Params)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public typealias BasicRPCRequest = MagicSDK_Web3.RPCRequest<MagicSDK_Web3.EthereumValue>
+public struct RPCResponse<Result> : Swift.Codable where Result : Swift.Decodable, Result : Swift.Encodable {
+  public let id: Swift.Int
+  public let jsonrpc: Swift.String
+  public let result: Result?
+  public let error: MagicSDK_Web3.RPCResponse<Result>.Error?
+  public struct Error : Swift.Error, Swift.Codable {
+    public let code: Swift.Int
+    public let message: Swift.String
+    public var localizedDescription: Swift.String {
+      get
+    }
+    public init(from decoder: Swift.Decoder) throws
+    public func encode(to encoder: Swift.Encoder) throws
+  }
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public typealias BasicRPCResponse = MagicSDK_Web3.RPCResponse<MagicSDK_Web3.EthereumValue>
+public func secp256k1_default_ctx_create(errorThrowable: Swift.Error) throws -> Swift.OpaquePointer
+public func secp256k1_default_ctx_destroy(ctx: Swift.OpaquePointer)
+public struct SolidityEmittedEvent {
+  public let name: Swift.String
+  public let values: [Swift.String : Any]
+  public init(name: Swift.String, values: [Swift.String : Any])
+}
+public struct SolidityEvent {
+  public struct Parameter : MagicSDK_Web3.SolidityParameter {
+    public let name: Swift.String
+    public let type: MagicSDK_Web3.SolidityType
+    public let components: [MagicSDK_Web3.SolidityParameter]?
+    public let indexed: Swift.Bool
+    public init?(_ abi: MagicSDK_Web3.ABIObject.Parameter)
+    public init(name: Swift.String, type: MagicSDK_Web3.SolidityType, indexed: Swift.Bool, components: [MagicSDK_Web3.SolidityEvent.Parameter]? = nil)
+  }
+  public let name: Swift.String
+  public let anonymous: Swift.Bool
+  public let inputs: [MagicSDK_Web3.SolidityEvent.Parameter]
+  public var signature: Swift.String {
+    get
+  }
+  public init?(abiObject: MagicSDK_Web3.ABIObject)
+  public init(name: Swift.String, anonymous: Swift.Bool, inputs: [MagicSDK_Web3.SolidityEvent.Parameter])
+}
+extension SolidityEvent : Swift.Hashable {
+  public static func == (lhs: MagicSDK_Web3.SolidityEvent, rhs: MagicSDK_Web3.SolidityEvent) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol SolidityFunctionHandler : AnyObject {
+  var address: MagicSDK_Web3.EthereumAddress? { get }
+  func call(_ call: MagicSDK_Web3.EthereumCall, outputs: [MagicSDK_Web3.SolidityFunctionParameter], block: MagicSDK_Web3.EthereumQuantityTag, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  func send(_ transaction: MagicSDK_Web3.EthereumTransaction, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+  func estimateGas(_ call: MagicSDK_Web3.EthereumCall, completion: @escaping (MagicSDK_Web3.EthereumQuantity?, Swift.Error?) -> Swift.Void)
+}
+public protocol SolidityParameter {
+  var name: Swift.String { get }
+  var type: MagicSDK_Web3.SolidityType { get }
+  var components: [MagicSDK_Web3.SolidityParameter]? { get }
+}
+public struct SolidityFunctionParameter : MagicSDK_Web3.SolidityParameter {
+  public let name: Swift.String
+  public let type: MagicSDK_Web3.SolidityType
+  public let components: [MagicSDK_Web3.SolidityParameter]?
+  public init?(_ parameter: MagicSDK_Web3.ABIObject.Parameter)
+  public init(name: Swift.String, type: MagicSDK_Web3.SolidityType, components: [MagicSDK_Web3.SolidityFunctionParameter]? = nil)
+}
+public protocol SolidityFunction : AnyObject {
+  var name: Swift.String { get }
+  var inputs: [MagicSDK_Web3.SolidityFunctionParameter] { get }
+  var outputs: [MagicSDK_Web3.SolidityFunctionParameter]? { get }
+  var handler: MagicSDK_Web3.SolidityFunctionHandler { get }
+  var signature: Swift.String { get }
+  init?(abiObject: MagicSDK_Web3.ABIObject, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  init(name: Swift.String, inputs: [MagicSDK_Web3.SolidityFunctionParameter], outputs: [MagicSDK_Web3.SolidityFunctionParameter]?, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  func invoke(_ inputs: MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityInvocation
+}
+extension SolidityFunction {
+  public var signature: Swift.String {
+    get
+  }
+}
+public class SolidityConstantFunction : MagicSDK_Web3.SolidityFunction {
+  final public let name: Swift.String
+  final public let inputs: [MagicSDK_Web3.SolidityFunctionParameter]
+  final public let outputs: [MagicSDK_Web3.SolidityFunctionParameter]?
+  final public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  required public init?(abiObject: MagicSDK_Web3.ABIObject, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  required public init(name: Swift.String, inputs: [MagicSDK_Web3.SolidityFunctionParameter] = [], outputs: [MagicSDK_Web3.SolidityFunctionParameter]?, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func invoke(_ inputs: MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityInvocation
+  @objc deinit
+}
+public class SolidityPayableFunction : MagicSDK_Web3.SolidityFunction {
+  final public let name: Swift.String
+  final public let inputs: [MagicSDK_Web3.SolidityFunctionParameter]
+  final public let outputs: [MagicSDK_Web3.SolidityFunctionParameter]?
+  final public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  required public init?(abiObject: MagicSDK_Web3.ABIObject, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  required public init(name: Swift.String, inputs: [MagicSDK_Web3.SolidityFunctionParameter] = [], outputs: [MagicSDK_Web3.SolidityFunctionParameter]? = nil, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func invoke(_ inputs: MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityInvocation
+  @objc deinit
+}
+public class SolidityNonPayableFunction : MagicSDK_Web3.SolidityFunction {
+  final public let name: Swift.String
+  final public let inputs: [MagicSDK_Web3.SolidityFunctionParameter]
+  final public let outputs: [MagicSDK_Web3.SolidityFunctionParameter]?
+  final public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  required public init?(abiObject: MagicSDK_Web3.ABIObject, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  required public init(name: Swift.String, inputs: [MagicSDK_Web3.SolidityFunctionParameter] = [], outputs: [MagicSDK_Web3.SolidityFunctionParameter]? = nil, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func invoke(_ inputs: MagicSDK_Web3.ABIEncodable...) -> MagicSDK_Web3.SolidityInvocation
+  @objc deinit
+}
+public class SolidityConstructor {
+  final public let inputs: [MagicSDK_Web3.SolidityFunctionParameter]
+  final public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  final public let payable: Swift.Bool
+  public init?(abiObject: MagicSDK_Web3.ABIObject, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public init(inputs: [MagicSDK_Web3.SolidityFunctionParameter], payable: Swift.Bool = false, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func invoke(byteCode: MagicSDK_Web3.EthereumData, parameters: [MagicSDK_Web3.ABIEncodable]) -> MagicSDK_Web3.SolidityConstructorInvocation
+  @objc deinit
+}
+public enum InvocationError : Swift.Error {
+  case contractNotDeployed
+  case invalidConfiguration
+  case invalidInvocation
+  case encodingError
+  public static func == (a: MagicSDK_Web3.InvocationError, b: MagicSDK_Web3.InvocationError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol SolidityInvocation {
+  var method: MagicSDK_Web3.SolidityFunction { get }
+  var parameters: [MagicSDK_Web3.SolidityWrappedValue] { get }
+  var handler: MagicSDK_Web3.SolidityFunctionHandler { get }
+  func createCall() -> MagicSDK_Web3.EthereumCall?
+  func createTransaction(nonce: MagicSDK_Web3.EthereumQuantity?, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> MagicSDK_Web3.EthereumTransaction?
+  func call(block: MagicSDK_Web3.EthereumQuantityTag, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  func send(nonce: MagicSDK_Web3.EthereumQuantity?, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+  func estimateGas(from: MagicSDK_Web3.EthereumAddress?, gas: MagicSDK_Web3.EthereumQuantity?, value: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumQuantity?, Swift.Error?) -> Swift.Void)
+  func encodeABI() -> MagicSDK_Web3.EthereumData?
+  init(method: MagicSDK_Web3.SolidityFunction, parameters: [MagicSDK_Web3.ABIEncodable], handler: MagicSDK_Web3.SolidityFunctionHandler)
+}
+public struct SolidityReadInvocation : MagicSDK_Web3.SolidityInvocation {
+  public let method: MagicSDK_Web3.SolidityFunction
+  public let parameters: [MagicSDK_Web3.SolidityWrappedValue]
+  public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  public init(method: MagicSDK_Web3.SolidityFunction, parameters: [MagicSDK_Web3.ABIEncodable], handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func call(block: MagicSDK_Web3.EthereumQuantityTag = .latest, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+  public func createCall() -> MagicSDK_Web3.EthereumCall?
+  public func createTransaction(nonce: MagicSDK_Web3.EthereumQuantity?, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> MagicSDK_Web3.EthereumTransaction?
+}
+public struct SolidityPayableInvocation : MagicSDK_Web3.SolidityInvocation {
+  public let method: MagicSDK_Web3.SolidityFunction
+  public let parameters: [MagicSDK_Web3.SolidityWrappedValue]
+  public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  public init(method: MagicSDK_Web3.SolidityFunction, parameters: [MagicSDK_Web3.ABIEncodable], handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func createTransaction(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> MagicSDK_Web3.EthereumTransaction?
+  public func createCall() -> MagicSDK_Web3.EthereumCall?
+  public func call(block: MagicSDK_Web3.EthereumQuantityTag = .latest, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+}
+public struct SolidityNonPayableInvocation : MagicSDK_Web3.SolidityInvocation {
+  public let method: MagicSDK_Web3.SolidityFunction
+  public let parameters: [MagicSDK_Web3.SolidityWrappedValue]
+  public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  public init(method: MagicSDK_Web3.SolidityFunction, parameters: [MagicSDK_Web3.ABIEncodable], handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func createTransaction(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> MagicSDK_Web3.EthereumTransaction?
+  public func createCall() -> MagicSDK_Web3.EthereumCall?
+  public func call(block: MagicSDK_Web3.EthereumQuantityTag = .latest, completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity?, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+}
+extension SolidityInvocation {
+  public func call(completion: @escaping ([Swift.String : Any]?, Swift.Error?) -> Swift.Void)
+  public func estimateGas(from: MagicSDK_Web3.EthereumAddress? = nil, gas: MagicSDK_Web3.EthereumQuantity? = nil, value: MagicSDK_Web3.EthereumQuantity? = nil, completion: @escaping (MagicSDK_Web3.EthereumQuantity?, Swift.Error?) -> Swift.Void)
+  public func encodeABI() -> MagicSDK_Web3.EthereumData?
+}
+public struct SolidityConstructorInvocation {
+  public let byteCode: MagicSDK_Web3.EthereumData
+  public let parameters: [MagicSDK_Web3.SolidityWrappedValue]
+  public let payable: Swift.Bool
+  public let handler: MagicSDK_Web3.SolidityFunctionHandler
+  public init(byteCode: MagicSDK_Web3.EthereumData, parameters: [MagicSDK_Web3.SolidityWrappedValue], payable: Swift.Bool, handler: MagicSDK_Web3.SolidityFunctionHandler)
+  public func createTransaction(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity = 0, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?) -> MagicSDK_Web3.EthereumTransaction?
+  public func send(nonce: MagicSDK_Web3.EthereumQuantity? = nil, from: MagicSDK_Web3.EthereumAddress, value: MagicSDK_Web3.EthereumQuantity = 0, gas: MagicSDK_Web3.EthereumQuantity, gasPrice: MagicSDK_Web3.EthereumQuantity?, completion: @escaping (MagicSDK_Web3.EthereumData?, Swift.Error?) -> Swift.Void)
+  public func encodeABI() -> MagicSDK_Web3.EthereumData?
+}
+public struct SolidityTuple : MagicSDK_Web3.ABIEncodable {
+  public init(_ values: MagicSDK_Web3.SolidityWrappedValue...)
+  public init(_ values: [MagicSDK_Web3.SolidityWrappedValue])
+  public func abiEncode(dynamic: Swift.Bool) -> Swift.String?
+}
+extension SolidityType : Swift.Codable {
+  public enum Error : Swift.Error {
+    case typeMalformed
+    public static func == (a: MagicSDK_Web3.SolidityType.Error, b: MagicSDK_Web3.SolidityType.Error) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  public init(_ string: Swift.String) throws
+  public init?(_ string: Swift.String, subTypes: [MagicSDK_Web3.SolidityType]?)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+indirect public enum SolidityType {
+  public enum ValueType {
+    case uint(bits: Swift.UInt16)
+    case int(bits: Swift.UInt16)
+    case address
+    case bool
+    case bytes(length: Swift.UInt?)
+    case string
+    case fixed(bits: Swift.UInt16, length: Swift.UInt8)
+    case ufixed(bits: Swift.UInt16, length: Swift.UInt8)
+    public static let uint8: MagicSDK_Web3.SolidityType.ValueType
+    public static let uint16: MagicSDK_Web3.SolidityType.ValueType
+    public static let uint32: MagicSDK_Web3.SolidityType.ValueType
+    public static let uint64: MagicSDK_Web3.SolidityType.ValueType
+    public static let uint256: MagicSDK_Web3.SolidityType.ValueType
+    public static let int8: MagicSDK_Web3.SolidityType.ValueType
+    public static let int16: MagicSDK_Web3.SolidityType.ValueType
+    public static let int32: MagicSDK_Web3.SolidityType.ValueType
+    public static let int64: MagicSDK_Web3.SolidityType.ValueType
+    public static let int256: MagicSDK_Web3.SolidityType.ValueType
+  }
+  case type(MagicSDK_Web3.SolidityType.ValueType)
+  case array(type: MagicSDK_Web3.SolidityType, length: Swift.UInt?)
+  case tuple([MagicSDK_Web3.SolidityType])
+  public static let string: MagicSDK_Web3.SolidityType
+  public static let bool: MagicSDK_Web3.SolidityType
+  public static let address: MagicSDK_Web3.SolidityType
+  public static let uint: MagicSDK_Web3.SolidityType
+  public static let uint8: MagicSDK_Web3.SolidityType
+  public static let uint16: MagicSDK_Web3.SolidityType
+  public static let uint32: MagicSDK_Web3.SolidityType
+  public static let uint64: MagicSDK_Web3.SolidityType
+  public static let uint256: MagicSDK_Web3.SolidityType
+  public static let int: MagicSDK_Web3.SolidityType
+  public static let int8: MagicSDK_Web3.SolidityType
+  public static let int16: MagicSDK_Web3.SolidityType
+  public static let int32: MagicSDK_Web3.SolidityType
+  public static let int64: MagicSDK_Web3.SolidityType
+  public static let int256: MagicSDK_Web3.SolidityType
+  public static func fixed(bits: Swift.UInt16, exponent: Swift.UInt8) -> MagicSDK_Web3.SolidityType
+  public static func ufixed(bits: Swift.UInt16, exponent: Swift.UInt8) -> MagicSDK_Web3.SolidityType
+  public static func bytes(length: Swift.UInt?) -> MagicSDK_Web3.SolidityType
+  public init(_ type: MagicSDK_Web3.SolidityType.ValueType)
+  public init(tuple: MagicSDK_Web3.SolidityType...)
+  public var isDynamic: Swift.Bool {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+  public var staticPartLength: Swift.UInt {
+    get
+  }
+}
+extension SolidityType.ValueType {
+  public var nativeType: MagicSDK_Web3.ABIConvertible.Type? {
+    get
+  }
+  public var isDynamic: Swift.Bool {
+    get
+  }
+  public var stringValue: Swift.String {
+    get
+  }
+}
+extension SolidityType : Swift.Equatable {
+  public static func == (a: MagicSDK_Web3.SolidityType, b: MagicSDK_Web3.SolidityType) -> Swift.Bool
+}
+extension SolidityType : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension SolidityType.ValueType : Swift.Equatable {
+  public static func == (a: MagicSDK_Web3.SolidityType.ValueType, b: MagicSDK_Web3.SolidityType.ValueType) -> Swift.Bool
+}
+extension SolidityType.ValueType : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct SolidityWrappedValue {
+  public let value: MagicSDK_Web3.ABIEncodable
+  public let type: MagicSDK_Web3.SolidityType
+  public init(value: MagicSDK_Web3.ABIEncodable, type: MagicSDK_Web3.SolidityType)
+  public static func string(_ value: Swift.String) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func bool(_ value: Swift.Bool) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func address(_ value: MagicSDK_Web3.EthereumAddress) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func uint(_ value: BigInt.BigUInt) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func uint(_ value: Swift.UInt8) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func uint(_ value: Swift.UInt16) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func uint(_ value: Swift.UInt32) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func uint(_ value: Swift.UInt64) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func int(_ value: BigInt.BigInt) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func int(_ value: Swift.Int8) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func int(_ value: Swift.Int16) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func int(_ value: Swift.Int32) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func int(_ value: Swift.Int64) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func bytes(_ value: Foundation.Data) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func fixedBytes(_ value: Foundation.Data) -> MagicSDK_Web3.SolidityWrappedValue
+  public static func array<T>(_ value: [T], elementType: MagicSDK_Web3.SolidityType) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable
+  public static func array<T>(_ value: [T]) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable, T : MagicSDK_Web3.SolidityTypeRepresentable
+  public static func fixedArray<T>(_ value: [T], elementType: MagicSDK_Web3.SolidityType, length: Swift.UInt) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable
+  public static func fixedArray<T>(_ value: [T], length: Swift.UInt) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable, T : MagicSDK_Web3.SolidityTypeRepresentable
+  public static func fixedArray<T>(_ value: [T]) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable, T : MagicSDK_Web3.SolidityTypeRepresentable
+  public static func array<T>(_ value: [[T]]) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable, T : MagicSDK_Web3.SolidityTypeRepresentable
+  public static func array<T>(_ value: [[[T]]]) -> MagicSDK_Web3.SolidityWrappedValue where T : MagicSDK_Web3.ABIEncodable, T : MagicSDK_Web3.SolidityTypeRepresentable
+  public static func tuple(_ wrappedValues: MagicSDK_Web3.SolidityWrappedValue...) -> MagicSDK_Web3.SolidityWrappedValue
+}
+extension String : MagicSDK_Web3.Web3BytesConvertible {
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+  public init(_ bytes: MagicSDK_Web3.Bytes)
+}
+extension Sequence where Self.Element == MagicSDK_Web3.Byte {
+  public func makeString() -> Swift.String
+}
+extension String {
+  public func binaryToHex() -> Swift.String
+  public func hexToBinary() -> Swift.String
+  public func hexToBytes() -> [Swift.UInt8]
+  public func substr(_ offset: Swift.Int, _ length: Swift.Int) -> Swift.String?
+  public func paddingLeft(toLength length: Swift.Int, withPad character: Swift.Character) -> Swift.String
+  public func paddingLeft(toMultipleOf base: Swift.Int, withPad character: Swift.Character) -> Swift.String
+  public func padding(toMultipleOf base: Swift.Int, withPad character: Swift.Character) -> Swift.String
+}
+public enum StringHexBytesError : Swift.Error {
+  case hexStringMalformed
+  public static func == (a: MagicSDK_Web3.StringHexBytesError, b: MagicSDK_Web3.StringHexBytesError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension Bool : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension String : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension Int : MagicSDK_Web3.EthereumValueConvertible {
+  public init(ethereumValue: MagicSDK_Web3.EthereumValue) throws
+  public func ethereumValue() -> MagicSDK_Web3.EthereumValue
+}
+extension String : MagicSDK_Web3.RLPItemConvertible {
+  public init(rlp: MagicSDK_Web3.RLPItem) throws
+  public func rlp() -> MagicSDK_Web3.RLPItem
+}
+extension UInt : MagicSDK_Web3.RLPItemConvertible {
+  public init(rlp: MagicSDK_Web3.RLPItem) throws
+  public func rlp() -> MagicSDK_Web3.RLPItem
+}
+extension BigUInt : MagicSDK_Web3.RLPItemConvertible {
+  public init(rlp: MagicSDK_Web3.RLPItem) throws
+  public func rlp() -> MagicSDK_Web3.RLPItem
+}
+extension UInt8 : MagicSDK_Web3.Web3BytesConvertible {
+}
+extension UInt16 : MagicSDK_Web3.Web3BytesConvertible {
+}
+extension UInt32 : MagicSDK_Web3.Web3BytesConvertible {
+}
+extension UInt64 : MagicSDK_Web3.Web3BytesConvertible {
+}
+extension UnsignedInteger {
+  public init(_ bytes: MagicSDK_Web3.Bytes)
+  public func makeBytes() -> MagicSDK_Web3.Bytes
+}
+extension UnsignedInteger {
+  public func containsMask(_ mask: Self) -> Swift.Bool
+}
+extension Web3 {
+  public init(rpcURL: Swift.String, rpcId: Swift.Int = 1)
+}
+extension Web3 {
+  public func clientVersion() -> PromiseKit.Promise<Swift.String>
+}
+extension Web3.Net {
+  public func version() -> PromiseKit.Promise<Swift.String>
+  public func peerCount() -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+}
+extension Web3.Eth {
+  public func protocolVersion() -> PromiseKit.Promise<Swift.String>
+  public func syncing() -> PromiseKit.Promise<MagicSDK_Web3.EthereumSyncStatusObject>
+  public func mining() -> PromiseKit.Promise<Swift.Bool>
+  public func hashrate() -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func gasPrice() -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func accounts() -> PromiseKit.Promise<[MagicSDK_Web3.EthereumAddress]>
+  public func blockNumber() -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getBalance(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getStorageAt(address: MagicSDK_Web3.EthereumAddress, position: MagicSDK_Web3.EthereumQuantity, block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func getTransactionCount(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getBlockTransactionCountByHash(blockHash: MagicSDK_Web3.EthereumData) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getBlockTransactionCountByNumber(block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getUncleCountByBlockHash(blockHash: MagicSDK_Web3.EthereumData) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getUncleCountByBlockNumber(block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getCode(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func sendRawTransaction(transaction: MagicSDK_Web3.EthereumSignedTransaction) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func sendTransaction(transaction: MagicSDK_Web3.EthereumTransaction) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func call(call: MagicSDK_Web3.EthereumCall, block: MagicSDK_Web3.EthereumQuantityTag) -> PromiseKit.Promise<MagicSDK_Web3.EthereumData>
+  public func estimateGas(call: MagicSDK_Web3.EthereumCall) -> PromiseKit.Promise<MagicSDK_Web3.EthereumQuantity>
+  public func getBlockByHash(blockHash: MagicSDK_Web3.EthereumData, fullTransactionObjects: Swift.Bool) -> PromiseKit.Promise<MagicSDK_Web3.EthereumBlockObject?>
+  public func getBlockByNumber(block: MagicSDK_Web3.EthereumQuantityTag, fullTransactionObjects: Swift.Bool) -> PromiseKit.Promise<MagicSDK_Web3.EthereumBlockObject?>
+  public func getTransactionByHash(blockHash: MagicSDK_Web3.EthereumData) -> PromiseKit.Promise<MagicSDK_Web3.EthereumTransactionObject?>
+  public func getTransactionByBlockHashAndIndex(blockHash: MagicSDK_Web3.EthereumData, transactionIndex: MagicSDK_Web3.EthereumQuantity) -> PromiseKit.Promise<MagicSDK_Web3.EthereumTransactionObject?>
+  public func getTransactionByBlockNumberAndIndex(block: MagicSDK_Web3.EthereumQuantityTag, transactionIndex: MagicSDK_Web3.EthereumQuantity) -> PromiseKit.Promise<MagicSDK_Web3.EthereumTransactionObject?>
+  public func getTransactionReceipt(transactionHash: MagicSDK_Web3.EthereumData) -> PromiseKit.Promise<MagicSDK_Web3.EthereumTransactionReceiptObject?>
+  public func getUncleByBlockHashAndIndex(blockHash: MagicSDK_Web3.EthereumData, uncleIndex: MagicSDK_Web3.EthereumQuantity) -> PromiseKit.Promise<MagicSDK_Web3.EthereumBlockObject?>
+  public func getUncleByBlockNumberAndIndex(block: MagicSDK_Web3.EthereumQuantityTag, uncleIndex: MagicSDK_Web3.EthereumQuantity) -> PromiseKit.Promise<MagicSDK_Web3.EthereumBlockObject?>
+}
+public struct Web3 {
+  public typealias Web3ResponseCompletion<Result> = (MagicSDK_Web3.Web3Response<Result>) -> Swift.Void where Result : Swift.Decodable, Result : Swift.Encodable
+  public typealias BasicWeb3ResponseCompletion = MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumValue>
+  public static let jsonrpc: Swift.String
+  public let properties: MagicSDK_Web3.Web3.Properties
+  public struct Properties {
+    public let provider: MagicSDK_Web3.Web3Provider
+    public let rpcId: Swift.Int
+  }
+  public var provider: MagicSDK_Web3.Web3Provider {
+    get
+  }
+  public var rpcId: Swift.Int {
+    get
+  }
+  public let net: MagicSDK_Web3.Web3.Net
+  public let eth: MagicSDK_Web3.Web3.Eth
+  public init(provider: MagicSDK_Web3.Web3Provider, rpcId: Swift.Int = 1)
+  public func clientVersion(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<Swift.String>)
+  public struct Net {
+    public let properties: MagicSDK_Web3.Web3.Properties
+    public func version(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<Swift.String>)
+    public func peerCount(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+  }
+  public struct Eth {
+    public let properties: MagicSDK_Web3.Web3.Properties
+    public func protocolVersion(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<Swift.String>)
+    public func syncing(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumSyncStatusObject>)
+    public func mining(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<Swift.Bool>)
+    public func hashrate(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func gasPrice(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func accounts(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<[MagicSDK_Web3.EthereumAddress]>)
+    public func blockNumber(response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getBalance(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getStorageAt(address: MagicSDK_Web3.EthereumAddress, position: MagicSDK_Web3.EthereumQuantity, block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumData>)
+    public func getTransactionCount(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getBlockTransactionCountByHash(blockHash: MagicSDK_Web3.EthereumData, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getBlockTransactionCountByNumber(block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getUncleCountByBlockHash(blockHash: MagicSDK_Web3.EthereumData, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getUncleCountByBlockNumber(block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getCode(address: MagicSDK_Web3.EthereumAddress, block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumData>)
+    public func sendTransaction(transaction: MagicSDK_Web3.EthereumTransaction, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumData>)
+    public func sendRawTransaction(transaction: MagicSDK_Web3.EthereumSignedTransaction, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumData>)
+    public func call(call: MagicSDK_Web3.EthereumCall, block: MagicSDK_Web3.EthereumQuantityTag, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumData>)
+    public func estimateGas(call: MagicSDK_Web3.EthereumCall, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumQuantity>)
+    public func getBlockByHash(blockHash: MagicSDK_Web3.EthereumData, fullTransactionObjects: Swift.Bool, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumBlockObject?>)
+    public func getBlockByNumber(block: MagicSDK_Web3.EthereumQuantityTag, fullTransactionObjects: Swift.Bool, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumBlockObject?>)
+    public func getTransactionByHash(blockHash: MagicSDK_Web3.EthereumData, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumTransactionObject?>)
+    public func getTransactionByBlockHashAndIndex(blockHash: MagicSDK_Web3.EthereumData, transactionIndex: MagicSDK_Web3.EthereumQuantity, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumTransactionObject?>)
+    public func getTransactionByBlockNumberAndIndex(block: MagicSDK_Web3.EthereumQuantityTag, transactionIndex: MagicSDK_Web3.EthereumQuantity, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumTransactionObject?>)
+    public func getTransactionReceipt(transactionHash: MagicSDK_Web3.EthereumData, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumTransactionReceiptObject?>)
+    public func getUncleByBlockHashAndIndex(blockHash: MagicSDK_Web3.EthereumData, uncleIndex: MagicSDK_Web3.EthereumQuantity, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumBlockObject?>)
+    public func getUncleByBlockNumberAndIndex(block: MagicSDK_Web3.EthereumQuantityTag, uncleIndex: MagicSDK_Web3.EthereumQuantity, response: @escaping MagicSDK_Web3.Web3.Web3ResponseCompletion<MagicSDK_Web3.EthereumBlockObject?>)
+  }
+}
+public struct Web3HttpProvider : MagicSDK_Web3.Web3Provider {
+  public let rpcURL: Swift.String
+  public init(rpcURL: Swift.String, session: Foundation.URLSession = URLSession(configuration: .default))
+  public func send<Params, Result>(request: MagicSDK_Web3.RPCRequest<Params>, response: @escaping MagicSDK_Web3.Web3HttpProvider.Web3ResponseCompletion<Result>) where Params : Swift.Decodable, Params : Swift.Encodable, Result : Swift.Decodable, Result : Swift.Encodable
+}
+public protocol Web3Provider {
+  typealias Web3ResponseCompletion<Result> = (MagicSDK_Web3.Web3Response<Result>) -> Swift.Void where Result : Swift.Decodable, Result : Swift.Encodable
+  func send<Params, Result>(request: MagicSDK_Web3.RPCRequest<Params>, response: @escaping Self.Web3ResponseCompletion<Result>) where Params : Swift.Decodable, Params : Swift.Encodable, Result : Swift.Decodable, Result : Swift.Encodable
+}
+public struct Web3Response<Result> where Result : Swift.Decodable, Result : Swift.Encodable {
+  public enum Error : Swift.Error {
+    case emptyResponse
+    case requestFailed(Swift.Error?)
+    case connectionFailed(Swift.Error?)
+    case serverError(Swift.Error?)
+    case decodingError(Swift.Error?)
+  }
+  public enum Status<Result> {
+    case success(Result)
+    case failure(Swift.Error)
+  }
+  public let status: MagicSDK_Web3.Web3Response<Result>.Status<Result>
+  public var result: Result? {
+    get
+  }
+  public var error: Swift.Error? {
+    get
+  }
+  public init(status: MagicSDK_Web3.Web3Response<Result>.Status<Result>)
+  public init(error: Swift.Error)
+  public init(rpcResponse: MagicSDK_Web3.RPCResponse<Result>)
+  public init(error: MagicSDK_Web3.Web3Response<Result>.Error)
+}
+extension Web3Response.Status {
+  public var isSuccess: Swift.Bool {
+    get
+  }
+  public var isFailure: Swift.Bool {
+    get
+  }
+  public var result: Result? {
+    get
+  }
+  public var error: Swift.Error? {
+    get
+  }
+}
+extension Web3Response.Status : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension Web3Response.Status : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension MagicSDK_Web3.ABIObject.StateMutability : Swift.Equatable {}
+extension MagicSDK_Web3.ABIObject.StateMutability : Swift.Hashable {}
+extension MagicSDK_Web3.ABIObject.StateMutability : Swift.RawRepresentable {}
+extension MagicSDK_Web3.ABIObject.ObjectType : Swift.Equatable {}
+extension MagicSDK_Web3.ABIObject.ObjectType : Swift.Hashable {}
+extension MagicSDK_Web3.ABIObject.ObjectType : Swift.RawRepresentable {}
+extension MagicSDK_Web3.ContractParsingError : Swift.Equatable {}
+extension MagicSDK_Web3.ContractParsingError : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumAddress.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumAddress.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumBlockObject.Transaction.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumBlockObject.Transaction.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumPrivateKey.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumPrivateKey.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumPublicKey.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumPublicKey.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumSyncStatusObject.CodingKeys : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumSyncStatusObject.CodingKeys : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumSyncStatusObject.CodingKeys : Swift.RawRepresentable {}
+extension MagicSDK_Web3.EthereumSignedTransaction.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumSignedTransaction.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumValue.Error : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumValue.Error : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumValueRepresentableError : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumValueRepresentableError : Swift.Hashable {}
+extension MagicSDK_Web3.EthereumValueInitializableError : Swift.Equatable {}
+extension MagicSDK_Web3.EthereumValueInitializableError : Swift.Hashable {}
+extension MagicSDK_Web3.RLPDecoder.Error : Swift.Equatable {}
+extension MagicSDK_Web3.RLPDecoder.Error : Swift.Hashable {}
+extension MagicSDK_Web3.RLPEncoder.Error : Swift.Equatable {}
+extension MagicSDK_Web3.RLPEncoder.Error : Swift.Hashable {}
+extension MagicSDK_Web3.RLPItemRepresentableError : Swift.Equatable {}
+extension MagicSDK_Web3.RLPItemRepresentableError : Swift.Hashable {}
+extension MagicSDK_Web3.RLPItemInitializableError : Swift.Equatable {}
+extension MagicSDK_Web3.RLPItemInitializableError : Swift.Hashable {}
+extension MagicSDK_Web3.InvocationError : Swift.Equatable {}
+extension MagicSDK_Web3.InvocationError : Swift.Hashable {}
+extension MagicSDK_Web3.SolidityType.Error : Swift.Equatable {}
+extension MagicSDK_Web3.SolidityType.Error : Swift.Hashable {}
+extension MagicSDK_Web3.StringHexBytesError : Swift.Equatable {}
+extension MagicSDK_Web3.StringHexBytesError : Swift.Hashable {}
