@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'MagicSDK-Web3'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Web3 library for Swift. Sign transactions and interact with Smart Contracts in the Ethereum Network.'
 
   s.description      = <<-DESC
@@ -16,8 +16,9 @@ HTTP RPC interface provided by this library or a custom RPC interface
   s.source           = { :git => 'https://github.com/magiclabs/magic-web3-ios-pod.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '9.0'
+  s.osx.deployment_target = '10.12'
 
-  s.swift_versions = '5.1.3', '5.1.2', '5.0', '5.1'
+  s.swift_versions = '5.4'
 
   s.default_subspecs = 'Core', 'HTTPExtension'
 
